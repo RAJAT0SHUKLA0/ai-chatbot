@@ -56,7 +56,7 @@ export default function AIChat() {
           className="py-5 px-6 bg-gradient-to-r from-indigo-700/20 via-purple-700/20 to-transparent border-b border-white/20 text-center"
         >
           <h1 className="text-3xl font-bold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-            SkillSense AI Chatbot
+             AI Chatbot
           </h1>
           <p className="text-sm text-gray-400 mt-1">Your Smart Assistant 🤖</p>
         </motion.div>
