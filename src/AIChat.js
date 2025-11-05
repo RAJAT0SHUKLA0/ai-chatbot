@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
 
 export default function AIChat() {
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
+  const isSendDisabled = loading || !prompt.trim();
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -56,7 +59,7 @@ export default function AIChat() {
           className="py-5 px-6 bg-gradient-to-r from-indigo-700/20 via-purple-700/20 to-transparent border-b border-white/20 text-center"
         >
           <h1 className="text-3xl font-bold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-             AI Chatbot
+            AI Chatbot
           </h1>
           <p className="text-sm text-gray-400 mt-1">Your Smart Assistant 🤖</p>
         </motion.div>
@@ -125,40 +128,24 @@ export default function AIChat() {
 <div className="relative flex items-center p-6 bg-[#111827]/70 backdrop-blur-md border-t border-white/10">
   <textarea
     className="flex-grow bg-[#0f172a]/60 text-white placeholder-gray-400 rounded-2xl 
-               p-4 pr-20 resize-none border border-gray-700/50 focus:ring-2 
-               focus:ring-indigo-500 focus:outline-none transition-all shadow-inner text-[1rem] min-h-[70px]"
+               p-4 resize-none border border-gray-700/50 focus:ring-2 
+               focus:ring-indigo-500 focus:outline-none transition-all shadow-inner text-[1rem] min-h-[80px]"
     rows="2"
     placeholder="Ask anything..."
     value={prompt}
     onChange={(e) => setPrompt(e.target.value)}
     onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
   />
-<motion.button
-        whileTap={{ scale: 0.9 }}
-        onClick={handleSend}
-        className="absolute right-6 flex items-center gap-2
-                   bg-gradient-to-r from-indigo-500 to-purple-600
-                   px-6 py-3 rounded-full shadow-lg
-                   hover:shadow-[0_0_15px_rgba(139,92,246,0.6)]
-                   hover:from-purple-600 hover:to-indigo-500
-                   transition-all duration-300 ease-in-out"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 text-white"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M5 12h14M12 5l7 7-7 7"
-          />
-        </svg>
-        <span className="text-white font-semibold tracking-wide">Send</span>
-      </motion.button>
+  <Button
+    variant="contained"
+    endIcon={<SendIcon />}
+    onClick={handleSend}
+    disabled={isSendDisabled}
+    title={isSendDisabled ? "Type a message or wait..." : "Send message"}
+    sx={{ borderRadius: 9999, px: 3, py: 1.25, ml: 2 }}
+  >
+    {loading ? "Sending..." : "Send"}
+  </Button>
 
 </div>
 
